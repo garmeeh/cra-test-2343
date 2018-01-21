@@ -1,25 +1,45 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+import { QueryRenderer, graphql } from 'react-relay';
+
+import environment from './createRelayEnvironment';
+import Feed from './Feed';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <h2>Tiny GitHunt</h2>
+        <QueryRenderer
+          environment={environment}
+          query={graphql`
+            query AppFeedQuery {
+              feed(type: NEW, limit: 5) {
+                ...Feed
+              }
+            }
+          `}
+          render={({ error, props }) => {
+            if (error) {
+              return <div>{error.message}</div>;
+            } else if (props) {
+              console.log(props.feed);
+              return <Feed data={props.feed} />;
+            }
+            return <div>Loading</div>;
+          }}
+        />
+        <h3>More info</h3>
+        <ul>
+          <li>
+            <a href="http://www.githunt.com/">Full GitHunt App</a>
+          </li>
+          <li>
+            <a href="https://github.com/stubailo/relay-modern-hello-world">
+              Improve this example on GitHub
+            </a>
+          </li>
+        </ul>
       </div>
     );
   }
