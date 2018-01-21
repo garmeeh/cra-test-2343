@@ -9,14 +9,14 @@
 /*::
 import type {ConcreteFragment} from 'relay-runtime';
 export type FeedEntry = {|
-  +repository: {|
+  +repository: ?{|
     +owner: ?{|
       +login: string;
     |};
     +name: string;
     +stargazers_count: number;
   |};
-  +postedBy: {|
+  +postedBy: ?{|
     +login: string;
   |};
 |};

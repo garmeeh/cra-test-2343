@@ -9,7 +9,7 @@
 /*::
 import type {ConcreteFragment} from 'relay-runtime';
 export type Feed = $ReadOnlyArray<{|
-  +repository: {|
+  +repository: ?{|
     +owner: ?{|
       +login: string;
     |};
